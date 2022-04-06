@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Timothy Weather Site</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+        body {
+            background-color: #353b48;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+            color: #fac73a;
+            font-size: 50px;
+            margin-top: 4%;
+            text-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            font-family: Roboto;
+        }
+        .inputField {
+            font-size: 25px;
+            width: 660px;
+            border-radius: 70px;
+            border-color: gray;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+            border: honeydew;
+            font-family: Roboto;
+            padding: 15px;
+        }
+        .requestField {
+            font-size: 25px;
+            min-width: 160px;
+            background-color: #fac73a;
+            border-radius: 70px;
+            border-color: gray;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+            border: honeydew;
+            font-family: Roboto;
+            padding: 15px;
+            font-family: Roboto;
+        }
+        h2 {
+            text-align: center;
+            color: whitesmoke;
+            font-size: 35px;
+            text-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            font-family: Roboto;
+        }
+        h3 {
+            text-align: center;
+            color: whitesmoke;
+            font-size: 25px;
+            text-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            font-family: Roboto;
+        }
+        div {
+            background-color: #353b48;
+
+        }
+        .week {
+            text-align: center;
+            color: #e84118;
+            font-size: 25px;
+            font-family: Roboto;
+            display: inline;
+        }
+        .day, .today {
+            padding: 15px;
+            margin: 25px;
+            width: 150px;
+            height: 190px;
+            display: inline-block;
+        }
+        .day:hover{
+            transform: scale(1.45);
+            border-right: solid 2px whitesmoke;
+            border-left: solid 2px whitesmoke;
+            background-color: rgba(0, 0, 0, 0.1);
+            transition: 0.35s;
+            padding: 2px;
+        }
+
+        .today:hover{
+            transform: scale(1.45);
+            height: 215px;
+            width: 170px;
+            background-color: rgba(0, 0, 0, 0.1);
+            transition: 0.35s;
+            padding: 2px;
+        }
+        p {
+            color: whitesmoke;
+            display: inline;
+            font-size: 15px;
+        }
+        h4 {
+            font-size: 22px;
+            color: whitesmoke;
+            display: inline;
+        }
+        h5 {
+            font-size: 17px;
+            color: gray;
+            display: inline;
+        }
+        .result {
+            padding: 10px;
+            display: block;
+        }
+
+
+        .menu-main {
+         list-style: none;
+         margin: 40px 0 5px;
+         padding: 25px 0 5px;
+         text-align: center;
+         background: #353b48;
+      }
+
+      .menu-main li {
+         display: inline-block;
+      }
+
+      .menu-main li:after {
+         content: "|";
+         color: #606060;
+         display: inline-block;
+         vertical-align: top;
+      }
+
+      .menu-main li:last-child:after {
+         content: none;
+      }
+
+      .menu-main a {
+         text-decoration: none;
+         font-family: Roboto;
+         letter-spacing: 2px;
+         position: relative;
+         padding-bottom: 20px;
+         margin: 0 34px 0 30px;
+         font-size: 17px;
+         text-transform: uppercase;
+         display: inline-block;
+         transition: color .2s;
+      }
+
+      .menu-main a,
+      .menu-main a:visited {
+         color: #9d999d;
+      }
+
+      .menu-main a.current,
+      .menu-main a:hover {
+         color: #feb386;
+      }
+
+      .menu-main a:before,
+      .menu-main a:after {
+         content: "";
+         position: absolute;
+         height: 4px;
+         top: auto;
+         right: 50%;
+         bottom: -5px;
+         left: 50%;
+         background: #feb386;
+         transition: .8s;
+      }
+
+      .menu-main a:hover:before,
+      .menu-main .current:before {
+         left: 0;
+      }
+
+      .menu-main a:hover:after,
+      .menu-main .current:after {
+         right: 0;
+      }
+
+      @media (max-width:550px) {
+         .menu-main {
+            padding-top: 0
+         }
+
+         .menu-main li {
+            display: block;
+         }
+
+         .menu-main li:after {
+            content: none;
+         }
+
+         .menu-main a {
+            padding: 25px 0 20px;
+            margin: 0 30px;
+         }
+      }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <ul class="menu-main">
+            {% for item in menu %}
+                <li><p><a href="{{item.link}}">{{item.text}}</a></p></li>
+            {% endfor %}
+            <a>Current user: {{user}}</a>
+        </ul>
+    </div>
+
+    <h1>Welcome to the Weather Site</h1>
+        <form action="/" method="post">
+            {% csrf_token %}
+        <input type="text" name="input_city" class="inputField" placeholder="Input the requested city">
+
+        <br>
+        <br>
+        <input type="submit" value="Submit" name="result" class="requestField">
+            </form>
+        <h2>{{ city }}</h2>
+
+        <div class="result">
+            <div class="today">
+                <h3 class="week">Now: {{ today.2.temperature }}</h3>
+                <br>
+                <p> Wind: {{ today.8.wind_speed }} {{ today.9.wind_direction }} </p>
+                <br><br>
+                <h4>Feels like: {{ today.3.feels_like }}</h4>
+                <br>
+                <h5>Maximal: {{ today.5.maximal_temperature_daily }}</h5>
+                <br>
+                <h5>Minimal: {{ today.4.minimal_temperature_daily }}</h5>
+                <br>
+                <h5>Pressure: {{ today.6.pressure }}</h5>
+                <br>
+                <h5>Humidity: {{ today.7.humidity }}</h5>
+                <br>
+                <h5>Weather: {{ today.10.weather }}</h5>
+            </div>
+        </div>
+</body>
+</html>
